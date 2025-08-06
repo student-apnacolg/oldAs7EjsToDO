@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+html,body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  text-align: center;
+  background-color: #f4f4f4;
+  font-family: "Poppins", sans-serif;
+}
+
+main {
+  flex: 1;
+}
+
+header, footer {
+  color: white;
+  padding: 1rem 0;
+  background-color: #333;
+}
+
+form {
+  margin: 1rem;
+}
+
+input[type="text"],select {
+  width: 15rem;
+  margin: .4rem;
+  max-width: 90%;
+  padding: .5rem;
+}
+
+button {
+  cursor: pointer;
+  margin: .4rem;
+  padding: .5rem .75rem;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  margin: .7rem 0;
+}
+
+.inline-form {
+  display: inline;
+  margin-left: .5rem;
+}
+
+.edit-form {
+  margin-top: 1rem;
+}
+
+.edit-form input[type="text"],
+.edit-form select {
+  padding: 0.5rem;
+  width: 15rem;
+  max-width: 90%;
+}
+
+.edit-form button {
+  padding: .5rem .75rem;
+  margin-top: .7rem;
+}
+
+.filter-form {
+  margin-bottom: 1rem;
+}
+
+.filter-form label {
+  font-weight: 500;
+  margin-right: .7rem;
+}
+
+.filter-form select {
+  padding: .4rem .7rem;
+  border-radius: .25rem;
+}
