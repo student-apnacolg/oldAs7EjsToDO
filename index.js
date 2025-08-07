@@ -16,10 +16,12 @@ app.get('/', (req, res) => {
 
 app.post("/", (req, res) => {
   const task = req.body.task?.trim();
-  const priority = req.body.priority || "Medium";
+  const priority = req.body.priority;
 
-  if (task) {
+  if (task && priority) {
     todos.push({text: task,priority})
+  } else {
+    console.log("Missing task or priority")
   }
   
   res.redirect("/")
