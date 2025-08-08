@@ -4,72 +4,63 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Todo List</title>
   <link rel="stylesheet" href="/styles.css">
+  <title>Todo List</title>
 </head>
 
 <body>
-
   <%- include("partials/header") %>
 
     <main>
-      <!-- Add Task Form -->
-      <form action="/" method="POST" onsubmit="return validateForm()">
-        <input type="text" name="task" id="taskInput" placeholder="Add a New Task" required>
-        <select name="priority">
-          <option value="Low">Low</option>
-          <option value="Medium" selected>Medium</option>
+      <form action="/" method="POST" class="addForm">
+        <input type="text" name="task" placeholder="Create a Task" required>
+        <select name="priority" class="prioritySelect" required>
+          <option value="">Select Priority</option>
           <option value="High">High</option>
-        </select>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>  
         <button type="submit">Add</button>
       </form>
 
-      <!-- Filter Dropdown -->
-      <form action="/" method="GET" class="filter-form">
-        <label>Filter:</label>
-        <select name="priority" onchange="this.form.submit()">
-          <option value="">All</option>
-          <option value="High" <%= filter === "High" ? "selected" : "" %>>High</option>
-          <option value="Medium" <%= filter === "Medium" ? "selected" : "" %>>Medium</option>
-          <option value="Low" <%= filter === "Low" ? "selected" : "" %>>Low</option>
-        </select>
-      </form>
+      <% if(error) { %>
+        <p class="error"><%= error %></p>
+      <% } %>
 
-
-      <ul>
-        <% todos.forEach((todo, index)=> { %>
-          <% if(!filter || todo.priority===filter) {%>
-            <li>
-              <strong>[<%= todo.priority %>]</strong>
-              <%= todo.text %>
-
-                <form action="/delete" method="POST" class="inline-form">
-                  <input type="hidden" name="index" value="<%= index %>">
-                  <button type="submit">X</button>
-                </form>
-
-                <form action="/edit" method="GET" class="inline-form">
-                  <input type="hidden" name="index" value="<%= index %>">
-                  <button type="submit">Edit</button>
-                </form>
-            </li>
-            <%}%>
-              <%})%>
+      <ul class="taskList">
+        <% tasks.forEach((task, index)=> {%>
+          <li>
+            <% if(editIndex===index) { %>
+              <form action="/edit" method="POST" class="editForm">
+                <input type="hidden" name="editIndex" value="<%= index %>">
+                <input type="text" name="updatedIndex" value="<%= task.text %>" required>
+                <select name="updatedPriority" class="prioritySelect">
+                  <option value="High" <%= task.priority === "High" ? "selected" : "" %>>High</option>
+                  <option value="Medium" <%= task.priority === "Medium" ? "selected" : "" %>>Medium</option>
+                  <option value="Low" <%= task.priority === "Low" ? "selected" : "" %>>Low</option>
+                </select>
+                <button type="submit">Save</button>
+              </form>
+              <% } else { %>
+                <strong><%= task.text %></strong> - <em><%= task.priority %></em>
+                <div class="formContainer">
+                  <form action="/start-edit" method="POST" class="startEditForm">
+                    <input type="hidden" name="editIndex" value="<%= index %>">
+                    <button type="submit">Edit</button>
+                  </form>
+                  <form action="/delete" method="POST" class="deleteForm">
+                    <input type="hidden" name="deleteIndex" value="<%= index %>">
+                    <button type="submit">X</button>
+                  </form>
+                </div>  
+                  <% } %>
+          </li>
+          <% }) %>
       </ul>
+
     </main>
 
     <%- include("partials/footer") %>
-
-      <script>
-        function validateForm() {
-          const input = document.getElementById("taskInput").value.trim();
-          if (!input) {
-            alert("Please Enter a Task")
-            return false
-          }
-          return true
-        }
-      </script>
 </body>
 
 </html>
